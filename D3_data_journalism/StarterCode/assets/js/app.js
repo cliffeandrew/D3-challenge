@@ -26,24 +26,24 @@ var chartGroup = svg.append("g")
   .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
 // Load data from hours-of-tv-watched.csv
-d3.csv("assets/data/data.csv").then(function(tvData) {
+d3.csv("assets/data/data.csv").then(function(healthcaredata) {
 
-  console.log(tvData);
+  console.log(healthcaredata);
 
-  // Cast the hours value to a number for each piece of tvData
-  tvData.forEach(function(d) {
+  // Cast the hours value to a number for each piece of healthcaredata
+  healthcaredata.forEach(function(d) {
     d.healthcare = +d.healthcare;
   });
 
   // Configure a band scale for the horizontal axis with a padding of 0.1 (10%)
   var xBandScale = d3.scaleBand()
-    .domain(tvData.map(d => d.state))
+    .domain(healthcaredata.map(d => d.state))
     .range([0, chartWidth])
     .padding(0.1);
 
   // Create a linear scale for the vertical axis.
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(tvData, d => d.healthcare)])
+    .domain([0, d3.max(healthcaredata, d => d.healthcare)])
     .range([chartHeight, 0]);
 
   // Create two new functions passing our scales in as arguments
@@ -60,10 +60,10 @@ d3.csv("assets/data/data.csv").then(function(tvData) {
     .attr("transform", `translate(0, ${chartHeight})`)
     .call(bottomAxis);
 
-  // Create one SVG rectangle per piece of tvData
+  // Create one SVG rectangle per piece of healthcaredata
   // Use the linear and band scales to position each rectangle within the chart
   chartGroup.selectAll(".bar")
-    .data(tvData)
+    .data(healthcaredata)
     .enter()
     .append("rect")
     .attr("class", "bar")
