@@ -63,17 +63,17 @@ d3.csv("assets/data/data.csv").then(function(healthcaredata) {
     .append("circle")
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", "15")
+    .attr("r", "10")
     .attr("fill", "blue")
-    .attr("opacity", ".75");
-
+    .attr("opacity", ".6");
+    
     // Step 6: Initialize tool tip
     // ==============================
     var toolTip = d3.tip()
       .attr("class", "tooltip")
       .offset([80, -60])
-      .html(function(d) {
-        return (`${d.state}<br>Poverty Rate: ${d.poverty}<br>Healthcare Stat: ${d.healthcare}`);
+      .html(function(data) {
+         return (`${data.state}<br>Poverty Rate: ${data.poverty}<br>Healthcare Stat: ${data.healthcare}`);
       });
 
     // Step 7: Create tooltip in the chart
@@ -81,15 +81,15 @@ d3.csv("assets/data/data.csv").then(function(healthcaredata) {
     chartGroup.call(toolTip);
 
     // Step 8: Create event listeners to display and hide the tooltip
-    // ==============================
+    // ==============================       
     circlesGroup.on("click", function(data) {
       toolTip.show(data, this);
     })
       // onmouseout event
       .on("mouseout", function(data, index) {
         toolTip.hide(data);
-      });
-
+      });      
+    
     // Create axes labels
     chartGroup.append("text")
       .attr("transform", "rotate(-90)")
@@ -97,12 +97,12 @@ d3.csv("assets/data/data.csv").then(function(healthcaredata) {
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .attr("class", "axisText")
-      .text("Healthcare Stat vs Poverty - 1");
+      .text("Healthcare Stat");
 
     chartGroup.append("text")
       .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
       .attr("class", "axisText")
-      .text("Healthcare Stat vs Poverty - 2");
+      .text("Poverty Rate");
   }).catch(function(error) {
     console.log(error);
   });
