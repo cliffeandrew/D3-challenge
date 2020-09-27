@@ -37,7 +37,7 @@ d3.csv("assets/data/data.csv").then(function(healthcaredata) {
 
   // Configure a band scale for the horizontal axis with a padding of 0.1 (10%)
   var xBandScale = d3.scaleBand()
-    .domain(healthcaredata.map(d => d.state))
+    .domain(healthcaredata.map(d => d.abbr))
     .range([0, chartWidth])
     .padding(0.1);
 
@@ -67,7 +67,7 @@ d3.csv("assets/data/data.csv").then(function(healthcaredata) {
     .enter()
     .append("rect")
     .attr("class", "bar")
-    .attr("x", d => xBandScale(d.state))
+    .attr("x", d => xBandScale(d.abbr))
     .attr("y", d => yLinearScale(d.healthcare))
     .attr("width", xBandScale.bandwidth())
     .attr("height", d => chartHeight - yLinearScale(d.healthcare));
